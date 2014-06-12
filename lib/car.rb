@@ -18,7 +18,12 @@ class Car
 
   def depreciated_value()
     year_diff = Date.today.year - @year
-    @msrp*(1+0.05)**-year_diff
+    value = @msrp-(year_diff*(@msrp*0.05))
+    #@msrp*(1+0.05)**-year_diff
+    if value < 0
+      value = 0
+    end
+    value
   end
 
 
