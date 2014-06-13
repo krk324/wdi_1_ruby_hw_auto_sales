@@ -1,28 +1,41 @@
 require_relative '../lib/usedcar.rb'
 
 class CarLot
-  require 'date'
 
-  attr_reader :lot_value, :car_collections
-  attr_accessor :name, :usedcars, :cars
+  attr_reader :cars
+  attr_accessor :name
 
 
-  def initialize(name,usedcars,cars)
+  def initialize(name)
     @name = name
-    @usedcars = usedcars
-    @cars = cars
-    @lot_value = lot_value_calc
-    @car_collections = cars + usedcars
+    @cars = []
   end
 
-  def lot_value_calc
-    usedcar_valuelist = @usedcars.map {|thing| thing.markup_price}
-    cars_valuelist = @cars.map { |thing| thing.markup_price}
+  def value
+    # cars.map{ |car| car.price }.reduce{ |sum, price| sum + price }
+    cars.map(&:price).reduce(0, :+)
+  end
 
-    total_valuelist = usedcar_valuelist + cars_valuelist
+  # def lot_value_calc
+  #   usedcar_valuelist = @usedcars.map {|thing| thing.markup_price}
+  #   cars_valuelist = @cars.map { |thing| thing.markup_price}
 
-    total_valuelist.inject{|sum,x| sum + x }
+  #   total_valuelist = usedcar_valuelist + cars_valuelist
 
+  #   total_valuelist.inject{|sum,x| sum + x }
+
+  # end
+
+  def cars_with_make(make)
+    cars.select{ |car| car.make == make }
+  end
+
+  def cars_with_model(model)
+    cars.select{ |car| car.model == model }
+  end
+
+  def cars_with_year(year)
+    cars.select{ |car| car.year == year }
   end
 
 end

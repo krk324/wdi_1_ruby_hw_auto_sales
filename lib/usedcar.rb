@@ -1,24 +1,29 @@
 require_relative '../lib/car.rb'
+require_relative '../lib/damage.rb'
 
 
 class UsedCar < Car
+  DEPRECIATION_PER_MILE = 0.000001
 
-  attr_reader :final_value, :description
-  attr_accessor :mileage #, :damages, :repair_cost
+  attr_accessor :mileage
+  attr_reader :damages #since you can chnage damages object it just reads.
 
-  def initialize(make,model,year,msrp,markup,mileage)
-    super(make,model,year,msrp,markup)
+  def initialize(mileage:,**attributes)
+    #super(make,model,year,msrp,markup)
+    super(attributes)
     @mileage = mileage
-    @final_value = value_calculation
-    # @description = damages.description
-    # @repair_cost = damages.repair_cost
+    @damages = []
   end
 
-private
+  def damaged?
+    damages.any?
+  end
 
-  def value_calculation
+  def depreciated_value
     #sum_repair_cost = @repair_cost.inject{|sum,x| sum + x }
-    depreciated_value - (@mileage*0.0001) #- sum_repair_cost
+    #call repair_cost from damages object and reduce will do sum = sum + damage
+        #reduce(:+) will add to nil so it won't work. reduce is same as inject
+    super - damages.map(&:repair_cost).reduce(0,:+) - mileage * DEPRECIATION_PER_MILE
   end
 
 end
