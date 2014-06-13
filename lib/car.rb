@@ -2,7 +2,7 @@ require 'date'
 
 class Car
 
-  attr_reader :make, :model, :year, :manufacture, :value
+  attr_reader :make, :model, :year, :manufacture, :value, :markup_price
   attr_accessor :msrp, :markup
 
 
@@ -13,9 +13,11 @@ class Car
     @msrp = msrp
     #Add depreciated value taking year of manufacture. 5% per year
     @markup = markup
-    @markup_price = markup_price
+    @markup_price = markup_price_calc
     @value = depreciated_value
   end
+
+private
 
   def depreciated_value
     year_diff = Date.today.year - @year
@@ -27,7 +29,7 @@ class Car
     value
   end
 
-  def markup_price
+  def markup_price_calc
     (1+@markup) * @msrp
   end
 
