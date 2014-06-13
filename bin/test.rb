@@ -8,5 +8,6 @@ cars = [
   car5 = Car.new('Ford','Sportscar',2013,10000,0.3)
 ]
 
+puts cars.inspect
 puts cars[0].value
 puts cars[0].markup_price
