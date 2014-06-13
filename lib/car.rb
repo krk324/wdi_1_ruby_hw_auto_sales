@@ -11,10 +11,10 @@ class Car
     @model = model
     @year = year
     @msrp = msrp
-    #Add depreciated value taking year of manufacture. 5% per year
     @markup = markup
-    @markup_price = markup_price_calc
     @value = depreciated_value
+    @markup_price = markup_price_calc
+
   end
 
 private
@@ -30,7 +30,7 @@ private
   end
 
   def markup_price_calc
-    (1+@markup) * @msrp
+    (1+@markup) * @value
   end
 
 

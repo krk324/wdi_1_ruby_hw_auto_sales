@@ -2,6 +2,7 @@ require_relative '../lib/car.rb'
 
 
 class UsedCar < Car
+
   attr_reader :final_value, :description
   attr_accessor :mileage #, :damages, :repair_cost
 
